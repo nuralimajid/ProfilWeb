@@ -1,8 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Google Sheets API Configuration
+    const API_KEY = 'AIzaSyDGXlFYI_mV9diljGAClxgZzEtd9oxbMyw'; // Ganti dengan API Key Anda
+    const SPREADSHEET_ID = 'https://docs.google.com/spreadsheets/d/1nnsT6GH5p6MF4zZ24ExsAB7jqjbbU2ml1hHPPbPfAuI/edit?usp=sharing'; // Ganti dengan Spreadsheet ID Google Sheet Anda
+
     // Referensi ke elemen yang ada di index.html
     const profilePhoto = document.getElementById('profilePhoto');
-    const photoUpload = document.getElementById('photoUpload');
-    const changePhotoBtn = document.getElementById('changePhotoBtn');
+    const changePhotoBtn = document.getElementById('changePhotoBtn'); // Tetap ada untuk edit lokal
+    const photoUpload = document.getElementById('photoUpload'); // Tetap ada untuk edit lokal
     const aboutMe = document.getElementById('aboutMe');
     const email = document.getElementById('email');
     const phone = document.getElementById('phone');
@@ -14,16 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const addItemBtns = document.querySelectorAll('.add-item-btn');
 
     let isEditMode = false;
-    // PENTING: Periksa status login dari localStorage
     let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
-    // Buat tombol edit secara dinamis jika user sudah login
     let editBtn;
     if (isLoggedIn) {
         editBtn = document.createElement('button');
         editBtn.id = 'editBtn';
         editBtn.textContent = 'Edit Profil';
-        // Pastikan header ada sebelum menambahkan tombol
         const header = document.querySelector('header');
         if (header) {
             header.appendChild(editBtn);
@@ -33,31 +34,75 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    let currentProfileData = {}; // Ganti originalData menjadi currentProfileData untuk menyimpan data yang sedang aktif
+    let currentProfileData = {};
 
     // --- FUNGSI UTAMA ---
 
-    // 1. Memuat Data dari LocalStorage atau data.json
+    // 1. Memuat Data dari LocalStorage atau Google Sheets API
     async function loadProfileData() {
         const storedData = localStorage.getItem('personalProfileData');
         if (storedData) {
-            // Jika ada data di localStorage, gunakan itu
             currentProfileData = JSON.parse(storedData);
             console.log('Data dimuat dari LocalStorage.');
         } else {
-            // Jika tidak ada di localStorage, muat dari data.json sebagai default
+            // Jika tidak ada di localStorage, muat dari Google Sheets
             try {
-                const response = await fetch('data.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                const profileResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Profil!A:G?key=${API_KEY}`);
+                const eduResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Pendidikan!A:E?key=${API_KEY}`);
+                const expResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/PengalamanKerja!A:E?key=${API_KEY}`);
+                const skillResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/SoftSkills!A:B?key=${API_KEY}`);
+
+                if (!profileResponse.ok || !eduResponse.ok || !expResponse.ok || !skillResponse.ok) {
+                    throw new Error(`HTTP error! status: ${profileResponse.status || eduResponse.status || expResponse.status || skillResponse.status}`);
                 }
-                currentProfileData = await response.json();
-                console.log('Data dimuat dari data.json.');
-                // Simpan data dari data.json ke localStorage untuk penggunaan selanjutnya
+
+                const profileData = await profileResponse.json();
+                const eduData = await eduResponse.json();
+                const expData = await expResponse.json();
+                const skillData = await skillResponse.json();
+
+                // Fungsi pembantu untuk mengonversi data array dari Sheet ke objek
+                const parseSheetData = (values) => {
+                    if (!values || values.length < 2) return [];
+                    const headers = values[0];
+                    return values.slice(1).map(row => {
+                        const obj = {};
+                        headers.forEach((header, index) => {
+                            obj[header] = row[index] || ''; // Gunakan string kosong jika data kosong
+                        });
+                        return obj;
+                    });
+                };
+
+                const parsedProfile = parseSheetData(profileData.values)[0] || {}; // Ambil baris pertama untuk profil
+                const parsedEdu = parseSheetData(eduData.values);
+                const parsedExp = parseSheetData(expData.values);
+                const parsedSkill = parseSheetData(skillData.values).map(item => item.skill); // Ambil hanya nilai 'skill'
+
+                currentProfileData = {
+                    profile: {
+                        photo: parsedProfile.photo || "https://via.placeholder.com/150",
+                        aboutMe: parsedProfile.aboutMe || "Tidak ada deskripsi.",
+                        contact: {
+                            email: parsedProfile.email || "",
+                            phone: parsedProfile.phone || "",
+                            linkedin: parsedProfile.linkedin || "#",
+                            github: parsedProfile.github || "#"
+                        }
+                    },
+                    details: {
+                        education: parsedEdu,
+                        experience: parsedExp,
+                        softSkills: parsedSkill
+                    }
+                };
+                console.log('Data dimuat dari Google Sheets.');
+                // Simpan data dari Google Sheets ke localStorage untuk penggunaan selanjutnya
                 localStorage.setItem('personalProfileData', JSON.stringify(currentProfileData));
+
             } catch (error) {
-                console.error('Gagal memuat data:', error);
-                // Fallback data jika data.json gagal dimuat
+                console.error('Gagal memuat data dari Google Sheets:', error);
+                // Fallback data jika Google Sheets API gagal dimuat
                 currentProfileData = {
                     profile: {
                         photo: "https://via.placeholder.com/150",
@@ -73,10 +118,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         displayProfileData(currentProfileData);
-        updateEditModeUI(); // Panggil ini setelah data dimuat
+        updateEditModeUI();
     }
 
-    // 2. Menampilkan Data ke HTML
+    // 2. Menampilkan Data ke HTML (Fungsi ini tidak berubah)
     function displayProfileData(data) {
         profilePhoto.src = data.profile.photo;
         aboutMe.textContent = data.profile.aboutMe;
@@ -92,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderList(softSkillsList, data.details.softSkills, 'softSkills');
     }
 
-    // Fungsi pembantu untuk merender daftar (Pendidikan, Pengalaman, Soft Skills)
+    // Fungsi pembantu untuk merender daftar (Pendidikan, Pengalaman, Soft Skills) - tidak berubah banyak
     function renderList(container, items, type) {
         container.innerHTML = '';
         if (!items || items.length === 0) {
@@ -138,10 +183,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Mengaktifkan/ Menonaktifkan Mode Edit
+    // 3. Mengaktifkan/ Menonaktifkan Mode Edit (Fungsi ini tidak berubah signifikan)
     function toggleEditMode() {
         if (!isLoggedIn) {
-            alert("Anda harus login untuk mengedit profil. Silakan akses /login-page.");
+            alert("Anda harus login untuk mengedit profil. Silakan akses /login-page.html");
             return;
         }
 
@@ -174,13 +219,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!isEditMode) {
             saveProfileData();
-            // Setelah menyimpan, panggil displayProfileData dengan data yang sudah diperbarui dari currentProfileData
             displayProfileData(currentProfileData);
-            // Tidak perlu loadProfileData() lagi di sini karena currentProfileData sudah up-to-date
+            // Penting: Setelah menyimpan data ke localStorage,
+            // kita tidak akan langsung menulisnya ke Google Sheets dari sini
+            // karena itu butuh otentikasi lebih kompleks atau Apps Script.
+            // Data akan tetap tersimpan di localStorage browser ini.
         }
     }
 
-    // Fungsi pembantu untuk toggle contenteditable
+    // Fungsi pembantu untuk toggle contenteditable (tidak berubah)
     function toggleContentEditable(element, tagName) {
         if (element.tagName.toLowerCase() === tagName) {
             element.contentEditable = isEditMode;
@@ -188,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Fungsi untuk mengganti elemen dengan input field
+    // Fungsi untuk mengganti elemen dengan input field (tidak berubah)
     function replaceWithInputField(element, dataAttribute, type = 'text') {
         const value = element.getAttribute(dataAttribute) || element.textContent;
         const input = document.createElement('input');
@@ -202,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
         element.parentNode.insertBefore(input, element);
     }
 
-    // Fungsi untuk mengembalikan input field ke elemen anchor
+    // Fungsi untuk mengembalikan input field ke elemen anchor (tidak berubah)
     function replaceWithAnchor(element) {
         const input = element.previousElementSibling;
         if (input && input.tagName.toLowerCase() === 'input' && input.dataset.originalElementId === element.id) {
@@ -214,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Fungsi untuk mengaktifkan/menonaktifkan edit untuk daftar item
+    // Fungsi untuk mengaktifkan/menonaktifkan edit untuk daftar item (tidak berubah)
     function toggleListEdit(container, type) {
         const items = container.querySelectorAll('.item-entry');
         items.forEach(itemDiv => {
@@ -241,9 +288,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 4. Menyimpan Data ke LocalStorage
+    // 4. Menyimpan Data ke LocalStorage (Fungsi ini tidak berubah)
     function saveProfileData() {
-        // Ambil data terbaru langsung dari DOM
         const updatedData = {
             profile: {
                 photo: profilePhoto.src,
@@ -267,11 +313,11 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         localStorage.setItem('personalProfileData', JSON.stringify(updatedData));
-        currentProfileData = updatedData; // Perbarui data yang ada di memori juga
+        currentProfileData = updatedData;
         console.log('Data disimpan ke LocalStorage.');
     }
 
-    // Fungsi pembantu untuk mengambil data dari daftar (Pendidikan, Pengalaman, Soft Skills)
+    // Fungsi pembantu untuk mengambil data dari daftar (tidak berubah)
     function getListData(container, type) {
         const items = [];
         container.querySelectorAll('.item-entry').forEach(itemDiv => {
@@ -298,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- FUNGSI TAMBAHAN ---
 
-    // 5. Mengganti Foto Profil
+    // 5. Mengganti Foto Profil (tidak berubah)
     changePhotoBtn.addEventListener('click', () => {
         photoUpload.click();
     });
@@ -309,14 +355,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const reader = new FileReader();
             reader.onload = (e) => {
                 profilePhoto.src = e.target.result;
-                // Perbarui juga di currentProfileData agar sesuai
                 currentProfileData.profile.photo = e.target.result;
             };
             reader.readAsDataURL(file);
         }
     });
 
-    // 6. Menambah Item Baru (Pendidikan, Pengalaman, Soft Skill)
+    // 6. Menambah Item Baru (tidak berubah)
     addItemBtns.forEach(button => {
         button.addEventListener('click', (event) => {
             const targetType = event.target.dataset.target;
@@ -325,9 +370,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function addItem(type) {
-        // Ambil data terbaru dari DOM sebelum menambahkan item baru
-        saveProfileData(); // Pastikan currentProfileData adalah yang terbaru dari DOM
-        let dataToModify = JSON.parse(JSON.stringify(currentProfileData)); // Buat salinan untuk dimodifikasi
+        saveProfileData();
+        let dataToModify = JSON.parse(JSON.stringify(currentProfileData));
 
         const listContainer = document.getElementById(`${type}List`);
         const itemDiv = document.createElement('div');
@@ -362,21 +406,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = 'Hapus';
         deleteBtn.classList.add('delete-item-btn');
-        // PENTING: Gunakan panjang array yang sudah diperbarui
         deleteBtn.addEventListener('click', () => deleteItem(type, dataToModify.details[type].length));
         itemDiv.appendChild(deleteBtn);
 
         dataToModify.details[type].push(newItem);
         localStorage.setItem('personalProfileData', JSON.stringify(dataToModify));
-        currentProfileData = dataToModify; // Perbarui data di memori
+        currentProfileData = dataToModify;
         
         renderList(listContainer, currentProfileData.details[type], type);
         toggleListEdit(listContainer, type);
     }
 
-    // Fungsi untuk menghapus item
+    // Fungsi untuk menghapus item (tidak berubah)
     function deleteItem(type, index) {
-        // Ambil data terbaru dari localStorage saat akan menghapus
         let dataToModify = JSON.parse(localStorage.getItem('personalProfileData')) || {};
         if (!dataToModify.details || !dataToModify.details[type]) {
             console.warn("Data details atau type tidak ditemukan saat menghapus.");
@@ -386,7 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (index >= 0 && index < dataToModify.details[type].length) {
             dataToModify.details[type].splice(index, 1);
             localStorage.setItem('personalProfileData', JSON.stringify(dataToModify));
-            currentProfileData = dataToModify; // Perbarui data di memori
+            currentProfileData = dataToModify;
             renderList(document.getElementById(`${type}List`), currentProfileData.details[type], type);
             toggleListEdit(document.getElementById(`${type}List`), type);
         } else {
@@ -394,7 +436,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Fungsi untuk memperbarui tampilan UI mode edit (khusus untuk index.html)
+    // Fungsi untuk memperbarui tampilan UI mode edit (khusus untuk index.html) - tidak berubah
     function updateEditModeUI() {
         const editModeElements = document.querySelectorAll('.edit-mode-only');
         editModeElements.forEach(el => {
@@ -409,8 +451,6 @@ document.addEventListener('DOMContentLoaded', () => {
             replaceWithAnchor(github);
         }
         
-        // Panggil toggleListEdit tanpa mempedulikan isEditMode agar tombol hapus disembunyikan
-        // jika !isLoggedIn, atau ditampilkan jika isLoggedIn
         toggleListEdit(educationList, 'education');
         toggleListEdit(experienceList, 'experience');
         toggleListEdit(softSkillsList, 'softSkills');
@@ -418,7 +458,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Muat data saat halaman pertama kali dimuat
     loadProfileData();
-
-    // Pastikan UI mode edit diperbarui pada saat load
-    // updateEditModeUI(); // Dihapus, sudah dipanggil di loadProfileData
 });
