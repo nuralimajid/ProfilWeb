@@ -1,0 +1,50 @@
+{
+    "profile": {
+        "photo": "https://via.placeholder.com/150/3498db/ffffff?text=Your+Photo",
+        "aboutMe": "Halo! Saya adalah seorang individu yang bersemangat untuk terus belajar dan beradaptasi dengan teknologi baru. Saya senang memecahkan masalah kompleks dan selalu mencari cara untuk meningkatkan diri. Di luar coding, saya menikmati membaca buku, mendaki gunung, dan bermain musik.",
+        "contact": {
+            "email": "nama.anda@example.com",
+            "phone": "+62 812 3456 7890",
+            "linkedin": "https://www.linkedin.com/in/namaanda",
+            "github": "https://github.com/namaanda"
+        }
+    },
+    "details": {
+        "education": [
+            {
+                "title": "Sarjana Teknik Informasi",
+                "institution": "Universitas Teknologi Jaya",
+                "years": "2018-2022",
+                "description": "Fokus pada pengembangan web, basis data, dan algoritma."
+            },
+            {
+                "title": "SMA Jurusan IPA",
+                "institution": "SMA Negeri 1 Kota Maju",
+                "years": "2015-2018",
+                "description": "Aktif dalam klub robotika dan olimpiade fisika."
+            }
+        ],
+        "experience": [
+            {
+                "title": "Software Engineer",
+                "company": "Tech Solutions Inc.",
+                "years": "2023-Sekarang",
+                "description": "Mengembangkan aplikasi web menggunakan JavaScript dan Node.js. Bertanggung jawab atas optimasi kinerja dan pemeliharaan kode."
+            },
+            {
+                "title": "Junior Web Developer",
+                "company": "Digital Agency Kreatif",
+                "years": "2022-2023",
+                "description": "Membantu pengembangan frontend menggunakan HTML, CSS, dan JavaScript. Menerapkan desain responsif dan fitur interaktif."
+            }
+        ],
+        "softSkills": [
+            "Komunikasi Efektif",
+            "Kerja Sama Tim",
+            "Penyelesaian Masalah",
+            "Adaptabilitas",
+            "Manajemen Waktu",
+            "Berpikir Kritis"
+        ]
+    }
+}

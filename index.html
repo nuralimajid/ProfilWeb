@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Pribadi Anda</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Profil Pribadi Anda</h1>
+    </header>
+
+    <main class="container">
+        <section class="left-column">
+            <div class="profile-photo">
+                <img id="profilePhoto" src="https://via.placeholder.com/150" alt="Foto Profil">
+                <input type="file" id="photoUpload" accept="image/*" style="display: none;">
+                <button id="changePhotoBtn" class="edit-mode-only" style="display: none;">Ganti Foto</button>
+            </div>
+            <div class="description-card">
+                <h2>Tentang Saya</h2>
+                <p id="aboutMe">Ini adalah deskripsi singkat tentang diri Anda. Anda bisa menceritakan minat, keahlian utama, atau tujuan Anda di sini.</p>
+            </div>
+            <div class="contact-card">
+                <h2>Kontak</h2>
+                <ul>
+                    <li><strong>Email:</strong> <span id="email">nama.anda@example.com</span></li>
+                    <li><strong>Telepon:</strong> <span id="phone">+62 812 3456 7890</span></li>
+                    <li><strong>LinkedIn:</strong> <a id="linkedin" href="#" target="_blank">linkedin.com/in/namaanda</a></li>
+                    <li><strong>GitHub:</strong> <a id="github" href="#" target="_blank">github.com/namaanda</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="right-column">
+            <div class="card">
+                <h2>Pendidikan</h2>
+                <div id="educationList">
+                    <p><strong>Universitas Contoh</strong> - Sarjana Teknik (2018-2022)</p>
+                    <p><strong>SMA Negeri 1</strong> - IPA (2015-2018)</p>
+                </div>
+                <button class="add-item-btn edit-mode-only" data-target="education" style="display: none;">Tambah Pendidikan</button>
+            </div>
+
+            <div class="card">
+                <h2>Pengalaman Kerja</h2>
+                <div id="experienceList">
+                    <p><strong>Nama Perusahaan Contoh</strong> - Posisi (2022-Sekarang)</p>
+                    <ul>
+                        <li>Deskripsi singkat tanggung jawab atau pencapaian.</li>
+                    </ul>
+                </div>
+                <button class="add-item-btn edit-mode-only" data-target="experience" style="display: none;">Tambah Pengalaman</button>
+            </div>
+
+            <div class="card">
+                <h2>Soft Skills</h2>
+                <div id="softSkillsList">
+                    <ul>
+                        <li>Komunikasi</li>
+                        <li>Kerja Sama Tim</li>
+                        <li>Penyelesaian Masalah</li>
+                        <li>Adaptabilitas</li>
+                    </ul>
+                </div>
+                <button class="add-item-btn edit-mode-only" data-target="softSkills" style="display: none;">Tambah Soft Skill</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Profil Pribadi Anda. Dibuat dengan semangat.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

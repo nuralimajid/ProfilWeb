@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login untuk Mengedit Profil</title>
+    <link rel="stylesheet" href="style.css"> <style>
+        /* Styling khusus untuk halaman login */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--background-color);
+            padding: 20px;
+        }
+
+        .login-container {
+            background-color: var(--card-background);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-container h1 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .login-form label {
+            display: block;
+            text-align: left;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: calc(100% - 20px); /* Sesuaikan dengan padding */
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: var(--font-family);
+        }
+
+        .login-form input[type="text"]:focus,
+        .login-form input[type="password"]:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+            outline: none;
+        }
+
+        .login-form button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .login-form button:hover {
+            background-color: #2980b9; /* Sedikit lebih gelap */
+        }
+
+        .message {
+            margin-top: 20px;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login Admin</h1>
+        <form id="loginForm" class="login-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="code">Kode:</label>
+            <input type="password" id="code" name="code" required> <button type="submit">Login</button>
+        </form>
+        <p id="loginMessage" class="message"></p>
+    </div>
+
+    <script>
+        // JavaScript khusus untuk halaman login
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('loginForm');
+            const usernameInput = document.getElementById('username');
+            const codeInput = document.getElementById('code');
+            const loginMessage = document.getElementById('loginMessage');
+
+            const ADMIN_USERNAME = "admin";
+            const ADMIN_CODE = "12345"; // Ganti dengan kode yang kamu inginkan!
+
+            loginForm.addEventListener('submit', (event) => {
+                event.preventDefault(); // Mencegah form dari submit default
+
+                const enteredUsername = usernameInput.value.trim();
+                const enteredCode = codeInput.value.trim();
+
+                if (enteredUsername === ADMIN_USERNAME && enteredCode === ADMIN_CODE) {
+                    localStorage.setItem('isLoggedIn', 'true'); // Set status login di localStorage
+                    loginMessage.textContent = 'Login berhasil! Mengarahkan ke halaman profil...';
+                    loginMessage.style.color = 'green';
+                    setTimeout(() => {
+                        window.location.href = 'index.html'; // Redirect ke halaman profil
+                    }, 1500); // Tunggu 1.5 detik sebelum redirect
+                } else {
+                    loginMessage.textContent = 'Username atau kode salah. Silakan coba lagi.';
+                    loginMessage.style.color = 'red';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
