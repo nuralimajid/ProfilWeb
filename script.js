@@ -47,10 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             // Jika tidak ada di localStorage, muat dari Google Sheets
             try {
-                const profileResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Profil!A:G?key=${API_KEY}`);
-                const eduResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Pendidikan!A:E?key=${API_KEY}`);
-                const expResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/PengalamanKerja!A:E?key=${API_KEY}`);
-                const skillResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/SoftSkills!A:B?key=${API_KEY}`);
+                const profileResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/profil!A:G?key=${API_KEY}`);
+                const eduResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/pendidikan!A:E?key=${API_KEY}`);
+                const expResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/pengalamankerja!A:E?key=${API_KEY}`);
+                const skillResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/poftskills!A:B?key=${API_KEY}`);
 
                 if (!profileResponse.ok || !eduResponse.ok || !expResponse.ok || !skillResponse.ok) {
                     throw new Error(`HTTP error! status: ${profileResponse.status || eduResponse.status || expResponse.status || skillResponse.status}`);
