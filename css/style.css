@@ -368,14 +368,13 @@ h2 {
 
 .blog-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(3, 1fr); /* Default: 3 kolom untuk desktop */
   gap: 2rem;
   padding: 0 2rem;
 }
 
 .blog-card {
   opacity: 0;
-  flex: 0 0 calc(50% - 1rem); /* 2 konten per tampilan */
   background-color: #181818;
   border-radius: 1rem;
   overflow: hidden;
@@ -538,6 +537,16 @@ footer {
 
 
 /* Media Screen */
+@media screen and (max-width: 1024px) {
+  .portfolio-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  .blog-container {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+  
+}
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
@@ -550,3 +559,18 @@ footer {
     width: 100%;
     margin-top: 1rem;
   }
+
+  .blog-container {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-content {
+    padding: 1rem;
+  }
+  .blog-content h3 {
+    font-size: 1.1rem;
+  }
+  .blog-content p {
+    font-size: 0.9rem;
+  }
+}
