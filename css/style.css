@@ -557,14 +557,16 @@ footer {
   }
 
   .blog-slider {
-    flex-wrap: nowrap;
+    display: flex;
+    flex-direction: row;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    gap: 1rem;
   }
 
   .blog-card {
-    flex: 0 0 90%;
+    flex: 0 0 85%;
     scroll-snap-align: start;
   }
 
