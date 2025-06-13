@@ -26,12 +26,17 @@ header {
   position: sticky;
   top: 0;
   z-index: 1000;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap; /* Tambahkan ini agar elemen tidak meluber */
+  gap: 1rem; /* Supaya jika wrap, tetap ada spasi */
 }
 
 .logo {
@@ -43,7 +48,10 @@ header {
 .nav-links {
   list-style: none;
   display: flex;
+  flex-wrap: wrap; /* Tambahkan ini juga */
   gap: 1.5rem;
+  padding: 0;
+  margin: 0;
 }
 
 .nav-links a {
@@ -51,6 +59,7 @@ header {
   text-decoration: none;
   transition: transform 0.2s ease, font-weight 0.2s ease;
   font-weight: normal;
+  white-space: nowrap; /* Supaya teks link gak pecah */
 }
 
 .nav-links a:hover {
