@@ -535,3 +535,18 @@ footer {
     transform: translateY(0);
   }
 }
+
+
+/* Media Screen */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 1rem;
+  }
