@@ -537,15 +537,10 @@ footer {
 
 
 /* Media Screen */
-@media screen and (max-width: 1024px) {
-  .portfolio-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  }
-
+@media (max-width: 1024px) {
   .blog-container {
     grid-template-columns: repeat(2, 1fr);
   }
-  
 }
 @media (max-width: 768px) {
   .navbar {
