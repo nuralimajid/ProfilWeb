@@ -556,14 +556,23 @@ footer {
     margin-top: 1rem;
   }
 
-  .blog-slide-wrapper {
-    overflow-x: unset;
-    flex-wrap: wrap;
-    justify-content: center;
+  .blog-slider {
+    flex-direction: column;        /* ubah flex horizontal ke vertikal */
+    gap: 1.5rem;
+    transform: none !important;   /* hilangkan efek geser */
+  }
+
+  .blog-slider-wrapper {
+    overflow: visible;
+    padding: 0 1rem;
+  }
+
+  .slider-btn {
+    display: none; /* sembunyikan tombol kiri-kanan */
   }
 
   .blog-card {
-    min-width: 100% !important;
+    min-width: 100% !important; /* ambil lebar penuh container */
   }
 
   .blog-container {
