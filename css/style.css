@@ -556,6 +556,16 @@ footer {
     margin-top: 1rem;
   }
 
+  .blog-slide-wrapper {
+    overflow-x: unset;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .blog-card {
+    min-width: 100% !important;
+  }
+
   .blog-container {
     grid-template-columns: 1fr;
   }
