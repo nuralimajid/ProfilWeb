@@ -1,78 +1,254 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Pribadi Anda</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fathul Azhari - Personal Branding</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- HEADER / NAV -->
     <header>
-        <h1>Profil Pribadi Anda</h1>
+      <nav class="navbar">
+        <div class="logo">FathulAzhari.dev</div>
+        <ul class="nav-links">
+          <li><a href="#home">Beranda</a></li>
+          <li><a href="#about">Tentang Saya</a></li>
+          <li><a href="#portfolio">Portofolio</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#contact">Kontak</a></li>
+        </ul>
+      </nav>
     </header>
 
-    <main class="container">
-        <section class="left-column">
-            <div class="profile-photo">
-                <img id="profilePhoto" src="https://via.placeholder.com/150" alt="Foto Profil">
-                <input type="file" id="photoUpload" accept="image/*" style="display: none;">
-                <button id="changePhotoBtn" class="edit-mode-only" style="display: none;">Ganti Foto</button>
-            </div>
-            <div class="description-card">
-                <h2>Tentang Saya</h2>
-                <p id="aboutMe">Ini adalah deskripsi singkat tentang diri Anda. Anda bisa menceritakan minat, keahlian utama, atau tujuan Anda di sini.</p>
-            </div>
-            <div class="contact-card">
-                <h2>Kontak</h2>
-                <ul>
-                    <li><strong>Email:</strong> <span id="email">nama.anda@example.com</span></li>
-                    <li><strong>Telepon:</strong> <span id="phone">+62 812 3456 7890</span></li>
-                    <li><strong>LinkedIn:</strong> <a id="linkedin" href="#" target="_blank">linkedin.com/in/namaanda</a></li>
-                    <li><strong>GitHub:</strong> <a id="github" href="#" target="_blank">github.com/namaanda</a></li>
-                </ul>
-            </div>
-        </section>
+    <!-- HERO SECTION -->
+    <section id="home" class="hero">
+      <div class="hero-left">
+        <p class="greeting">Hello Buds</p>
+        <h1>I am <span class="highlight">Fathul Azhari</span></h1>
+        <p class="role">.NET Developer & AI Explorer</p>
+        <p class="description">
+          Saya adalah developer yang suka membuat aplikasi kreatif dan
+          fungsional dengan teknologi modern. Saat ini saya mengembangkan web,
+          API, dan sistem informasi berbasis .NET dan AI, sambil tetap santuy
+          😎.
+        </p>
+        <div class="cta-buttons">
+          <a href="#" class="btn primary">📄 Download CV</a>
+          <a href="#about" class="btn secondary">More</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-photo">
+          <img
+            src="/assets/img/fotome.jpg"
+            alt="Fathul Azhari"
+            class="hero-img"
+          />
+        </div>
+        <div class="social-icons">
+          <a
+            href="https://github.com/username"
+            target="_blank"
+            aria-label="GitHub"
+          >
+            <i class="fab fa-github"></i>
+          </a>
+          <a
+            href="https://linkedin.com/in/username"
+            target="_blank"
+            aria-label="LinkedIn"
+          >
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a
+            href="https://instagram.com/username"
+            target="_blank"
+            aria-label="Instagram"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="mailto:you@example.com" aria-label="Email">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </section>
 
-        <section class="right-column">
-            <div class="card">
-                <h2>Pendidikan</h2>
-                <div id="educationList">
-                    <p><strong>Universitas Contoh</strong> - Sarjana Teknik (2018-2022)</p>
-                    <p><strong>SMA Negeri 1</strong> - IPA (2015-2018)</p>
-                </div>
-                <button class="add-item-btn edit-mode-only" data-target="education" style="display: none;">Tambah Pendidikan</button>
-            </div>
+    <!-- ABOUT ME -->
+    <section id="about" class="section about">
+      <div class="about-container">
+        <div class="about-text">
+          <h2>Tentang Saya</h2>
+          <p>
+            Halo! Saya <strong>Fathul Azhari</strong>, seorang .NET Developer
+            yang suka menggabungkan <em>logika pemrograman</em> dengan
+            <em>sentuhan kreatif</em>. Saya percaya bahwa teknologi dan AI bisa
+            menjadi alat ampuh untuk menciptakan solusi praktis — dan tentu saja
+            tetap dengan gaya santuy 😎.
+          </p>
+          <p>
+            Saat ini saya fokus mengembangkan aplikasi web berbasis .NET,
+            Blazor, dan Supabase. Saya juga senang bereksperimen dengan desain,
+            animasi interaktif, dan membangun personal branding dengan sentuhan
+            humanis.
+          </p>
+        </div>
+        <div class="about-image">
+          <img src="img/foto-kerja.png" alt="Fathul Azhari ngoding" />
+        </div>
+      </div>
+    </section>
 
-            <div class="card">
-                <h2>Pengalaman Kerja</h2>
-                <div id="experienceList">
-                    <p><strong>Nama Perusahaan Contoh</strong> - Posisi (2022-Sekarang)</p>
-                    <ul>
-                        <li>Deskripsi singkat tanggung jawab atau pencapaian.</li>
-                    </ul>
-                </div>
-                <button class="add-item-btn edit-mode-only" data-target="experience" style="display: none;">Tambah Pengalaman</button>
-            </div>
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="section portfolio">
+      <h2 class="section-title">Portofolio</h2>
 
-            <div class="card">
-                <h2>Soft Skills</h2>
-                <div id="softSkillsList">
-                    <ul>
-                        <li>Komunikasi</li>
-                        <li>Kerja Sama Tim</li>
-                        <li>Penyelesaian Masalah</li>
-                        <li>Adaptabilitas</li>
-                    </ul>
-                </div>
-                <button class="add-item-btn edit-mode-only" data-target="softSkills" style="display: none;">Tambah Soft Skill</button>
-            </div>
-        </section>
-    </main>
+      <div class="carousel-container">
+        <button class="carousel-btn left" id="prevBtn">&#10094;</button>
 
+        <div class="carousel-track" id="portfolioTrack">
+          <div class="portfolio-card">
+            <img src="img/porto1.png" alt="Project 1" />
+            <div class="portfolio-info">
+              <h3>Employee Management API</h3>
+              <p>Sistem API karyawan berbasis .NET 9 & PostgreSQL.</p>
+            </div>
+          </div>
+          <div class="portfolio-card">
+            <img src="img/porto2.png" alt="Project 2" />
+            <div class="portfolio-info">
+              <h3>Web Klinik McHealthCare</h3>
+              <p>Blazor Server & SQL Server dengan Quill Editor.</p>
+            </div>
+          </div>
+          <div class="portfolio-card">
+            <img src="img/porto3.png" alt="Project 3" />
+            <div class="portfolio-info">
+              <h3>Sistem Parkir E-Tip</h3>
+              <p>Vue.js & .NET 9 dengan integrasi realtime.</p>
+            </div>
+          </div>
+          <!-- Tambah card lain jika perlu -->
+        </div>
+
+        <button class="carousel-btn right" id="nextBtn">&#10095;</button>
+      </div>
+    </section>
+
+    <!-- modal preview image portofolio -->
+    <div id="modalPreview" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" id="closeModal">&times;</span>
+        <img id="modalImg" src="" alt="Preview Project" />
+        <h3 id="modalTitle"></h3>
+        <p id="modalDesc"></p>
+      </div>
+    </div>
+
+    <!-- BLOG -->
+    <section id="blog" class="section">
+      <h2 class="section-title">Blog</h2>
+      <div class="blog-slider-wrapper">
+        <button class="slider-btn left-btn">←</button>
+
+        <div class="blog-slider">
+          <div class="blog-card">
+            <img src="img/blog1.jpg" alt="Blog 1" />
+            <div class="blog-content">
+              <h3>Tips Belajar .NET Lebih Cepat</h3>
+              <p>
+                Bagaimana menguasai dasar .NET dan praktik proyek nyata dalam
+                waktu singkat.
+              </p>
+              <a href="#" class="read-more">Baca Selengkapnya →</a>
+            </div>
+          </div>
+
+          <div class="blog-card">
+            <img src="img/blog2.jpg" alt="Blog 2" />
+            <div class="blog-content">
+              <h3>Integrasi Supabase di Web Static</h3>
+              <p>
+                Cara mudah mengelola konten website HTML murni dengan bantuan
+                Supabase.
+              </p>
+              <a href="#" class="read-more">Baca Selengkapnya →</a>
+            </div>
+          </div>
+
+          <!-- Blog 3 -->
+          <div class="blog-card">
+            <img src="img/blog3.jpg" alt="Blog 3" />
+            <div class="blog-content">
+              <h3>Manajemen Proyek IT untuk Freelancer</h3>
+              <p>
+                Cara menyusun dan mengelola tugas secara efisien pakai tools
+                gratis.
+              </p>
+              <a href="#" class="read-more">Baca Selengkapnya →</a>
+            </div>
+          </div>
+        </div>
+
+        <button class="slider-btn right-btn">→</button>
+      </div>
+    </section>
+    <!-- Modal Blog Detail -->
+    <div id="blogModal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2 id="modal-title">Judul Blog</h2>
+        <p id="modal-body">Konten blog akan ditampilkan di sini.</p>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <h2 class="section-title">Kontak</h2>
+
+      <div class="contact-wrapper">
+        <div class="contact-info">
+          <p>
+            <strong>Email:</strong>
+            <a href="mailto:youremail@example.com">youremail@example.com</a>
+          </p>
+          <p>
+            <strong>GitHub:</strong>
+            <a href="https://github.com/username" target="_blank"
+              >github.com/username</a
+            >
+          </p>
+          <p>
+            <strong>LinkedIn:</strong>
+            <a href="https://linkedin.com/in/username" target="_blank"
+              >linkedin.com/in/username</a
+            >
+          </p>
+          <p>
+            <strong>Instagram:</strong>
+            <a href="https://instagram.com/username" target="_blank"
+              >@username</a
+            >
+          </p>
+        </div>
+
+        <!-- Placeholder form, bisa aktifkan nanti -->
+        <div class="contact-form">
+          <p><em>Formulir kontak akan tersedia nanti 😉</em></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
     <footer>
-        <p>&copy; 2024 Profil Pribadi Anda. Dibuat dengan semangat.</p>
+      <p>© 2025 Fathul Azhari. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
-</body>
+    <script src="js/script.js"></script>
+  </body>
 </html>
